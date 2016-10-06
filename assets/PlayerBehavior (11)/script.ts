@@ -27,10 +27,34 @@ class PlayerBehavior extends Sup.Behavior {
   }
   
   update() {
+    //0 = croix
+    //1 = rond
+    //2 = carré
+    //3 = triangle
+    //4 = L1
+    //5 = R1
+    //6 = L2
+    //7 = R2
+    //8 = select
+    //9 = start
+    //10 = L3
+    //11 = R3
+    //12 = up
+    //13 = down
+    //14 = left
+    //15 = right
+    var leftIsDown = Sup.Input.isKeyDown('Q') || Sup.Input.isGamepadButtonDown(0,14);//Dpad left
+    var rightIsDown = Sup.Input.isKeyDown('D') || Sup.Input.isGamepadButtonDown(0,15);//Dpad right
+    var upIsDown = Sup.Input.isKeyDown('Z') || Sup.Input.isGamepadButtonDown(0,12);//Dpad up
+    var downIsDown = Sup.Input.isKeyDown('S') || Sup.Input.isGamepadButtonDown(0,13);//Dpad down
+    var jumpIsPressed = Sup.Input.wasKeyJustPressed('SPACE') || Sup.Input.wasGamepadButtonJustPressed(0,0);//croix
+    var punchIsPressed = Sup.Input.wasKeyJustPressed('U') || Sup.Input.wasGamepadButtonJustPressed(0,2);//carré
+    var dashIsDown = Sup.Input.isKeyDown('I') || Sup.Input.isGamepadButtonDown(0,1);//rond
+    var dashWasJustReleased = Sup.Input.wasKeyJustReleased('I') || Sup.Input.wasGamepadButtonJustReleased(0,1);//rond
     
     var punch=false;
     var x=this.getVelocity();
-    if ((Sup.Input.isKeyDown('Q') || Sup.Input.isKeyDown('D'))&& !(Sup.Input.isKeyDown('Q') && Sup.Input.isKeyDown('D')) && this.actualJump!=0 && !Sup.Input.isKeyDown('I')){
+    if ((leftIsDown || rightIsDown)&& !(leftIsDown && rightIsDown) && this.actualJump!=0 && !dashIsDown){
       this.actor.cannonBody.body.linearDamping=0;
     }
     else {
@@ -42,7 +66,7 @@ class PlayerBehavior extends Sup.Behavior {
     var positionY = this.actor.getY();
     var positionX = this.actor.getX();
     var canjump=true;
-    if (Sup.Input.isKeyDown('Q'))
+    if (leftIsDown)
     {
       if (x>(-this.maxSpeed)){
         x+=-this.walkspeed;
@@ -50,7 +74,7 @@ class PlayerBehavior extends Sup.Behavior {
     }
      
 
-    if (Sup.Input.isKeyDown('D'))
+    if (rightIsDown)
       {
         if (x<this.maxSpeed){
           x+=this.walkspeed;
@@ -58,7 +82,7 @@ class PlayerBehavior extends Sup.Behavior {
       }
     
 
-    if (Sup.Input.wasKeyJustPressed('U'))
+    if (punchIsPressed)
       {
         punch=true;
         this.punch();
@@ -74,7 +98,7 @@ class PlayerBehavior extends Sup.Behavior {
       y=0;
     }
     
-    if (Sup.Input.isKeyDown('I') && canjump)
+    if (dashIsDown && canjump)
     {
       chargeJump=true;
       if (this.actualJump>200){
@@ -89,7 +113,7 @@ class PlayerBehavior extends Sup.Behavior {
         this.actualJump+=20;
       }
     }
-    if (Sup.Input.wasKeyJustReleased('I') && canjump)
+    if (dashWasJustReleased && canjump)
     {
       if (this.actualJump<this.minJumpSize) {
         this.actualJump=this.minJumpSize;
@@ -97,9 +121,9 @@ class PlayerBehavior extends Sup.Behavior {
       this.jumpSoundPlayer.setPitch(0.5);
       this.jumpSoundPlayer.play();
       if (this.actualJump>=this.maxJumpSize){
-        if (Sup.Input.isKeyDown('Q')){
+        if (leftIsDown){
           x+=-this.actualJump/2;
-        }if (Sup.Input.isKeyDown('D')){
+        }if (rightIsDown){
           x+=this.actualJump/2;
         }
       }
@@ -107,7 +131,7 @@ class PlayerBehavior extends Sup.Behavior {
       this.actualJump=0;
     }   
     
-    if ((Sup.Input.wasKeyJustPressed('SPACE') || Sup.Input.wasGamepadButtonJustPressed(0,1)) && canjump && !Sup.Input.isKeyDown('I'))
+    if ( jumpIsPressed && canjump && !dashIsDown)
     {
       this.jumpSoundPlayer.setPitch(0.5);
       this.jumpSoundPlayer.play();
@@ -127,16 +151,20 @@ class PlayerBehavior extends Sup.Behavior {
   }
   
   animate(x,y,chargeJump,punch) {
+    var leftIsDown = Sup.Input.isKeyDown('Q') || Sup.Input.isGamepadButtonDown(0,14);
+    var rightIsDown = Sup.Input.isKeyDown('D') || Sup.Input.isGamepadButtonDown(0,15);
+    var upIsDown = Sup.Input.isKeyDown('Z') || Sup.Input.isGamepadButtonDown(0,12);
+    var downIsDown = Sup.Input.isKeyDown('S') || Sup.Input.isGamepadButtonDown(0,13);
     var run = false;
     var facingLeft = this.actor.spriteRenderer.getHorizontalFlip();
     if (x>5 || x<-5) {run = true}; 
-    if (Sup.Input.isKeyDown('D')){ facingLeft=false;}
-    if (Sup.Input.isKeyDown('Q')){ facingLeft=true;}
+    if (rightIsDown){ facingLeft=false;}
+    if (leftIsDown){ facingLeft=true;}
     if ((punch || this.isPlayingPunchAnimation())&&this.actor.spriteRenderer.getAnimationFrameIndex()!=5) {
       if (!this.isPlayingPunchAnimation()){
         var animationName = "punchDirect";
-        if (Sup.Input.isKeyDown('Z')){ animationName="punchUp";}
-        if (Sup.Input.isKeyDown('S')){ animationName="punchDown";}
+        if (upIsDown){ animationName="punchUp";}
+        if (downIsDown){ animationName="punchDown";}
         this.actor.spriteRenderer.setAnimation(animationName,true);
       }
     }
@@ -197,10 +225,12 @@ class PlayerBehavior extends Sup.Behavior {
   punch(){
     var test = Sup.ArcadePhysics2D.intersects(this.hitBoxPunch,Sup.getActor("Ball").arcadeBody2D);
     if (test) {
+      var upIsDown = Sup.Input.isKeyDown('Z') || Sup.Input.isGamepadButtonDown(0,12);
+      var downIsDown = Sup.Input.isKeyDown('S') || Sup.Input.isGamepadButtonDown(0,13);
       var left = this.actor.spriteRenderer.getHorizontalFlip();
       var right = !this.actor.spriteRenderer.getHorizontalFlip();
-      var up = Sup.Input.isKeyDown('Z');
-      var down = Sup.Input.isKeyDown('S');
+      var up = upIsDown;
+      var down = downIsDown;
       Sup.getActor("Ball").getBehavior(BallBehavior).gotPunched(left,right,up,down);
     }
     
