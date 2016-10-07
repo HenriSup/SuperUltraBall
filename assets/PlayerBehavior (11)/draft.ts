@@ -27,7 +27,12 @@ class PlayerBehavior extends Sup.Behavior {
   }
   
   update() {
-    
+    var leftIsDown = 
+    var rightIsDown = 
+    var upIsDown = 
+    var downIsDown = 
+    var jumpIsPressed = 
+    var dashIsDown = 
     var punch=false;
     var x=this.getVelocity();
     if ((Sup.Input.isKeyDown('Q') || Sup.Input.isKeyDown('D'))&& !(Sup.Input.isKeyDown('Q') && Sup.Input.isKeyDown('D')) && this.actualJump!=0 && !Sup.Input.isKeyDown('I')){

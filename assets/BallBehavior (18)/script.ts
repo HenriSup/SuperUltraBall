@@ -57,7 +57,9 @@ class BallBehavior extends Sup.Behavior {
       var volume = 1;   
       var maxSpeed = Math.max(Math.abs(this.actor.cannonBody.body.velocity.y),Math.abs(this.actor.cannonBody.body.velocity.x)); 
       
-      if (maxSpeed < 40) {
+      if (maxSpeed < 20) {
+        volume=0;
+      } else if (maxSpeed >= 20 && maxSpeed <40) {
         volume=0.1;
       } else if (maxSpeed >= 40 && maxSpeed <200) {
         volume=0.4;
