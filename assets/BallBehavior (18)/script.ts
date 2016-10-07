@@ -38,35 +38,9 @@ class BallBehavior extends Sup.Behavior {
       this.playSound();
     }
     
-    
-     if (Sup.Input.wasKeyJustPressed("NUMPAD4"))
-      {
-        velocityX+=-50;
-        this.playSound();
-        this.shouldShake = true;
-      }
-    if (Sup.Input.wasKeyJustPressed("NUMPAD6"))
-      {
-        velocityX+=50;
-        this.playSound();
-        this.shouldShake = true;
-      }
-      if (Sup.Input.wasKeyJustPressed("NUMPAD8"))
-      {
-        velocityY+=100;
-        this.playSound();
-        this.shouldShake = true;
-      }
-    if (Sup.Input.wasKeyJustPressed("NUMPAD2"))
-      {
-        velocityY+=-50;
-        this.playSound();
-        this.shouldShake = true;
-      }
-    
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
     
-    if (this.actor.cannonBody.body.velocity.y < -50 || this.actor.cannonBody.body.velocity.y > 50) {
+    if (this.actor.cannonBody.body.velocity.y < -10 || this.actor.cannonBody.body.velocity.y > 10) {
       Sup.getActor("ballVelocity").textRenderer.setText("x: "+this.actor.cannonBody.body.velocity.y.toFixed());
     } else {
       Sup.getActor("ballVelocity").textRenderer.setText("x: 0");
@@ -80,17 +54,31 @@ class BallBehavior extends Sup.Behavior {
   }
   
   playSound(){
-    var lower = 0.2;
-    var higher = 0.3;
-    var random = (Math.random() * (higher-lower)) + lower;
+      var volume = 1;   
+      var maxSpeed = Math.max(Math.abs(this.actor.cannonBody.body.velocity.y),Math.abs(this.actor.cannonBody.body.velocity.x)); 
+      
+      if (maxSpeed < 40) {
+        volume=0.1;
+      } else if (maxSpeed >= 40 && maxSpeed <200) {
+        volume=0.4;
+      }else if (maxSpeed >= 200 && maxSpeed <300) {
+        volume=0.6;
+      } else if (maxSpeed >= 300 && maxSpeed <400) {
+        volume=0.8;
+      } else {
+        volume=1;
+      }
+      var lower = 0.2;
+      var higher = 0.3;
+      var random = (Math.random() * (higher-lower)) + lower;
+      this.hitSoundPlayers[this.shouldPlayOn].setVolume(volume);
+      this.hitSoundPlayers[this.shouldPlayOn].setPitch(random);
+      this.hitSoundPlayers[this.shouldPlayOn].play();
+      this.shouldPlayOn++;
+      if (this.shouldPlayOn>=this.hitSoundPlayers.length){
+        this.shouldPlayOn=0;
+      }
     
-    this.hitSoundPlayers[this.shouldPlayOn].setPitch(random);
-    this.hitSoundPlayers[this.shouldPlayOn].play();
-    this.shouldPlayOn++;
-    if (this.shouldPlayOn>=this.hitSoundPlayers.length){
-      this.shouldPlayOn=0;
-    }
-
   }
   
   Animate(hit){
@@ -134,8 +122,8 @@ class BallBehavior extends Sup.Behavior {
   gotPunched(left,right,up,down){
     var velocityX=this.actor.cannonBody.body.velocity.x;
     var velocityY=this.actor.cannonBody.body.velocity.y;
-    if (left){velocityX=-Math.abs(velocityX)-150;}
-    if (right){velocityX=Math.abs(velocityX)+150;}
+    if (left){velocityX=-Math.abs(velocityX)-200;}
+    if (right){velocityX=Math.abs(velocityX)+200;}
     if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
     if (down){velocityY+=-(Math.abs(velocityY)*0.8)-100;}
     this.playSound();

@@ -1,13 +1,13 @@
 {
   "formatVersion": 2,
-  "isBitmap": false,
+  "isBitmap": true,
   "filtering": "pixelated",
   "pixelsPerUnit": 1,
   "size": 8,
   "color": "9c3dcf",
   "opacity": null,
-  "gridWidth": 16,
-  "gridHeight": 16,
-  "charset": null,
+  "gridWidth": 8,
+  "gridHeight": 8,
+  "charset": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàăçêëèïîìÄĂÉæÆôöòûù",
   "charsetOffset": 32
 }

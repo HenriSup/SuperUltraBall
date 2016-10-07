@@ -148,7 +148,7 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "p1",
+                "text": "P1",
                 "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
@@ -189,7 +189,7 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "p1",
+                "text": "P1",
                 "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
@@ -328,7 +328,7 @@
         }
       ],
       "position": {
-        "x": 78,
+        "x": -50,
         "y": -59,
         "z": 1
       },
