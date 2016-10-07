@@ -1,9 +1,9 @@
 {
-  "nextEntryId": 30,
+  "nextEntryId": 33,
   "nodes": [
     {
       "id": "0",
-      "name": "Scene",
+      "name": "Match",
       "type": "scene"
     },
     {
@@ -44,6 +44,11 @@
               "id": "9",
               "name": "Noxi",
               "type": "sprite"
+            },
+            {
+              "id": "30",
+              "name": "Gerbil",
+              "type": "sprite"
             }
           ]
         },
@@ -75,6 +80,11 @@
         {
           "id": "28",
           "name": "hitBox2",
+          "type": "sprite"
+        },
+        {
+          "id": "32",
+          "name": "BallIndicator",
           "type": "sprite"
         }
       ]
@@ -109,6 +119,11 @@
     {
       "id": "11",
       "name": "PlayerBehavior",
+      "type": "script"
+    },
+    {
+      "id": "31",
+      "name": "BallIndicatorBehavior",
       "type": "script"
     },
     {

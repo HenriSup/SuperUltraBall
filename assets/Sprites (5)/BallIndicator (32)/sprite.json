@@ -1,0 +1,44 @@
+{
+  "formatVersion": 3,
+  "maps": [
+    "map"
+  ],
+  "filtering": "pixelated",
+  "wrapping": "clampToEdge",
+  "pixelsPerUnit": 1,
+  "framesPerSecond": 20,
+  "opacity": 1,
+  "alphaTest": 0,
+  "frameOrder": "rows",
+  "grid": {
+    "width": 16,
+    "height": 16
+  },
+  "origin": {
+    "x": 0.5,
+    "y": 0.5
+  },
+  "animations": [
+    {
+      "id": "0",
+      "name": "Visible",
+      "startFrameIndex": 0,
+      "endFrameIndex": 18,
+      "speed": 1
+    },
+    {
+      "id": "1",
+      "name": "Invisible",
+      "startFrameIndex": 19,
+      "endFrameIndex": 19,
+      "speed": 1
+    }
+  ],
+  "mapSlots": {
+    "map": "map",
+    "light": null,
+    "specular": null,
+    "alpha": null,
+    "normal": null
+  }
+}
