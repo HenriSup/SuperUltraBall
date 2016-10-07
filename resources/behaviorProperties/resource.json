@@ -1,0 +1,22 @@
+{
+  "behaviors": {
+    "PlayerBehavior": {
+      "scriptId": "11",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
+    },
+    "BallBehavior": {
+      "scriptId": "18",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
+    },
+    "BallTrailBehavior": {
+      "scriptId": "21",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
+    }
+  }
+}

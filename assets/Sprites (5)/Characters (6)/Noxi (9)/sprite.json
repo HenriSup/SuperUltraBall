@@ -1,0 +1,86 @@
+{
+  "formatVersion": 3,
+  "maps": [
+    "map"
+  ],
+  "filtering": "pixelated",
+  "wrapping": "clampToEdge",
+  "pixelsPerUnit": 1,
+  "framesPerSecond": 7,
+  "opacity": null,
+  "alphaTest": 0.1,
+  "frameOrder": "rows",
+  "grid": {
+    "width": 23,
+    "height": 26
+  },
+  "origin": {
+    "x": 0.39,
+    "y": 0.5
+  },
+  "animations": [
+    {
+      "id": "0",
+      "name": "idle",
+      "startFrameIndex": 0,
+      "endFrameIndex": 7,
+      "speed": 2
+    },
+    {
+      "id": "2",
+      "name": "run",
+      "startFrameIndex": 8,
+      "endFrameIndex": 15,
+      "speed": 2
+    },
+    {
+      "id": "3",
+      "name": "charginJump",
+      "startFrameIndex": 16,
+      "endFrameIndex": 19,
+      "speed": 2
+    },
+    {
+      "id": "5",
+      "name": "inAirUp",
+      "startFrameIndex": 21,
+      "endFrameIndex": 21,
+      "speed": 1
+    },
+    {
+      "id": "7",
+      "name": "inAirDown",
+      "startFrameIndex": 22,
+      "endFrameIndex": 22,
+      "speed": 1
+    },
+    {
+      "id": "8",
+      "name": "punchDirect",
+      "startFrameIndex": 24,
+      "endFrameIndex": 29,
+      "speed": 3
+    },
+    {
+      "id": "9",
+      "name": "punchUp",
+      "startFrameIndex": 32,
+      "endFrameIndex": 37,
+      "speed": 3
+    },
+    {
+      "id": "10",
+      "name": "punchDown",
+      "startFrameIndex": 40,
+      "endFrameIndex": 45,
+      "speed": 3
+    }
+  ],
+  "mapSlots": {
+    "map": "map",
+    "light": null,
+    "specular": null,
+    "alpha": null,
+    "normal": null
+  }
+}

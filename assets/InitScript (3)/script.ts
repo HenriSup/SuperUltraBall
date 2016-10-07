@@ -1,0 +1,1 @@
+Sup.loadScene("Scene");

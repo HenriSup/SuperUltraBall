@@ -1,0 +1,120 @@
+{
+  "nextEntryId": 29,
+  "nodes": [
+    {
+      "id": "0",
+      "name": "Scene",
+      "type": "scene"
+    },
+    {
+      "id": "15",
+      "name": "Fonts",
+      "type": null,
+      "children": [
+        {
+          "id": "16",
+          "name": "Font",
+          "type": "font"
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "prefab",
+      "type": null,
+      "children": [
+        {
+          "id": "20",
+          "name": "BallTrailPrefab",
+          "type": "scene"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Sprites",
+      "type": null,
+      "children": [
+        {
+          "id": "6",
+          "name": "Characters",
+          "type": null,
+          "children": [
+            {
+              "id": "9",
+              "name": "Noxi",
+              "type": "sprite"
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "name": "Background",
+          "type": "sprite"
+        },
+        {
+          "id": "17",
+          "name": "Ball",
+          "type": "sprite"
+        },
+        {
+          "id": "21",
+          "name": "BallTrailBehavior",
+          "type": "script"
+        },
+        {
+          "id": "27",
+          "name": "hitBox",
+          "type": "sprite"
+        },
+        {
+          "id": "28",
+          "name": "hitBox2",
+          "type": "sprite"
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "Sounds",
+      "type": null,
+      "children": [
+        {
+          "id": "23",
+          "name": "Step",
+          "type": "sound"
+        },
+        {
+          "id": "24",
+          "name": "Jump",
+          "type": "sound"
+        },
+        {
+          "id": "25",
+          "name": "JumpLoading",
+          "type": "sound"
+        },
+        {
+          "id": "26",
+          "name": "BallHit",
+          "type": "sound"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "PlayerBehavior",
+      "type": "script"
+    },
+    {
+      "id": "18",
+      "name": "BallBehavior",
+      "type": "script"
+    },
+    {
+      "id": "3",
+      "name": "InitScript",
+      "type": "script"
+    }
+  ]
+}
