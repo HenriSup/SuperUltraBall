@@ -53,7 +53,7 @@
         {
           "type": "SpriteRenderer",
           "config": {
-            "spriteAssetId": "10",
+            "spriteAssetId": "29",
             "animationId": null,
             "horizontalFlip": false,
             "verticalFlip": false,

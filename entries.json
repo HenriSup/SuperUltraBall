@@ -1,5 +1,5 @@
 {
-  "nextEntryId": 29,
+  "nextEntryId": 30,
   "nodes": [
     {
       "id": "0",
@@ -50,6 +50,11 @@
         {
           "id": "10",
           "name": "Background",
+          "type": "sprite"
+        },
+        {
+          "id": "29",
+          "name": "Background2",
           "type": "sprite"
         },
         {
