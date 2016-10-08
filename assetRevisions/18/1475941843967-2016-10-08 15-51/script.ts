@@ -5,10 +5,7 @@ class BallBehavior extends Sup.Behavior {
   private timeShaking = 20;
   private hitBox:Sup.ArcadePhysics2D.Body;
   private shouldPlayOn=0;
-  private actualScore:number;
-  private matchArbitrator:MatchBehavior;
   awake() {
-    this.matchArbitrator = Sup.getActor("MatchArbitrator").getBehavior(MatchBehavior);
     this.hitBox = this.actor.arcadeBody2D;
   }
 
@@ -28,7 +25,6 @@ class BallBehavior extends Sup.Behavior {
       velocityY=(Math.abs(velocityY));
       this.actor.setY(-65);
       this.playSound();
-      this.touchTheGround();
     }  
     
     if (positionX<(-74)) {
@@ -122,31 +118,15 @@ class BallBehavior extends Sup.Behavior {
   gotPunched(left,right,up,down){
     var velocityX=this.actor.cannonBody.body.velocity.x;
     var velocityY=this.actor.cannonBody.body.velocity.y;
-    if (left){velocityX=-Math.abs(velocityX)-50;}
-    if (right){velocityX=Math.abs(velocityX)+50;}
+    if (left){velocityX=-Math.abs(velocityX)-200;}
+    if (right){velocityX=Math.abs(velocityX)+200;}
     if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
     if (down){velocityY+=-(Math.abs(velocityY)*0.8)-50;}
-    if (!down && !up){
-      if (left){velocityX=-Math.abs(velocityX)-50;}
-      if (right){velocityX=Math.abs(velocityX)+50;}
-    }
     this.playSound();
     this.shouldShake = true;
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
     this.shakeCam(true);
     this.Animate(true);
-    this.actualScore++;
-    this.matchArbitrator.addActualScore();
-  }
-  
-  touchTheGround(){
-    if (this.actor.getPosition().x<0){
-      this.matchArbitrator.addRightScore();
-    } else if (this.actor.getPosition().x>0){
-      this.matchArbitrator.addLeftScore();
-    }
-    this.actualScore = 0;
-    this.matchArbitrator.resetActualScore();
   }
   
 }

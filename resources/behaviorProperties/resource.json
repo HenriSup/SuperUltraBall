@@ -28,6 +28,12 @@
       "line": 0,
       "parentBehavior": null,
       "properties": []
+    },
+    "MatchBehavior": {
+      "scriptId": "34",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
     }
   }
 }
