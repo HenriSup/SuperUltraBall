@@ -40,12 +40,6 @@ class BallBehavior extends Sup.Behavior {
     
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
     
-    if (this.actor.cannonBody.body.velocity.y < -10 || this.actor.cannonBody.body.velocity.y > 10) {
-      Sup.getActor("ballVelocity").textRenderer.setText("x: "+this.actor.cannonBody.body.velocity.y.toFixed());
-    } else {
-      Sup.getActor("ballVelocity").textRenderer.setText("x: 0");
-    }
-    
     var trail = Sup.appendScene("prefab/BallTrailPrefab")[0];
     trail.setPosition(this.actor.getPosition().x,this.actor.getPosition().y,this.actor.getPosition().z-1);
     this.shakeCam(this.shouldShake);
@@ -127,7 +121,7 @@ class BallBehavior extends Sup.Behavior {
     if (left){velocityX=-Math.abs(velocityX)-200;}
     if (right){velocityX=Math.abs(velocityX)+200;}
     if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
-    if (down){velocityY+=-(Math.abs(velocityY)*0.8)-100;}
+    if (down){velocityY+=-(Math.abs(velocityY)*0.8)-50;}
     this.playSound();
     this.shouldShake = true;
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);

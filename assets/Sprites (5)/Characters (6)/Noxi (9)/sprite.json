@@ -57,23 +57,23 @@
     {
       "id": "8",
       "name": "punchDirect",
-      "startFrameIndex": 24,
+      "startFrameIndex": 26,
       "endFrameIndex": 29,
-      "speed": 3
+      "speed": 2
     },
     {
       "id": "9",
       "name": "punchUp",
-      "startFrameIndex": 32,
+      "startFrameIndex": 34,
       "endFrameIndex": 37,
-      "speed": 3
+      "speed": 2
     },
     {
       "id": "10",
       "name": "punchDown",
-      "startFrameIndex": 40,
+      "startFrameIndex": 42,
       "endFrameIndex": 45,
-      "speed": 3
+      "speed": 2
     }
   ],
   "mapSlots": {

@@ -4,7 +4,12 @@
       "scriptId": "11",
       "line": 0,
       "parentBehavior": null,
-      "properties": []
+      "properties": [
+        {
+          "name": "playerNumber",
+          "type": "number"
+        }
+      ]
     },
     "BallBehavior": {
       "scriptId": "18",

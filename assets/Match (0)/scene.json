@@ -231,10 +231,10 @@
                 "formatVersion": 2,
                 "type": "box",
                 "movable": false,
-                "width": 18,
+                "width": 27,
                 "height": 25,
                 "offset": {
-                  "x": 0,
+                  "x": 1,
                   "y": 0
                 },
                 "bounce": {
@@ -322,7 +322,12 @@
           "type": "Behavior",
           "config": {
             "behaviorName": "PlayerBehavior",
-            "propertyValues": {}
+            "propertyValues": {
+              "playerNumber": {
+                "type": "number",
+                "value": 0
+              }
+            }
           },
           "id": "3"
         }
@@ -444,10 +449,10 @@
                 "formatVersion": 2,
                 "type": "box",
                 "movable": false,
-                "width": 18,
+                "width": 27,
                 "height": 25,
                 "offset": {
-                  "x": 0,
+                  "x": 1,
                   "y": 0
                 },
                 "bounce": {
@@ -535,7 +540,12 @@
           "type": "Behavior",
           "config": {
             "behaviorName": "PlayerBehavior",
-            "propertyValues": {}
+            "propertyValues": {
+              "playerNumber": {
+                "type": "number",
+                "value": 1
+              }
+            }
           },
           "id": "3"
         }
@@ -669,8 +679,8 @@
       "name": "HUD",
       "children": [
         {
-          "id": "23",
-          "name": "ballVelocity",
+          "id": "40",
+          "name": "LeftScore",
           "children": [],
           "components": [
             {
@@ -678,11 +688,11 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "X:80",
-                "alignment": "left",
+                "text": "0",
+                "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
-                "color": null,
+                "color": "ffffff",
                 "overrideOpacity": false,
                 "opacity": null
               },
@@ -690,50 +700,9 @@
             }
           ],
           "position": {
-            "x": 0,
-            "y": 1,
-            "z": 1
-          },
-          "orientation": {
-            "x": 0,
+            "x": 3,
             "y": 0,
-            "z": 0,
-            "w": 1
-          },
-          "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
-          },
-          "visible": true,
-          "layer": 0,
-          "prefab": null
-        },
-        {
-          "id": "25",
-          "name": "ab2dTouches",
-          "children": [],
-          "components": [
-            {
-              "type": "TextRenderer",
-              "config": {
-                "formatVersion": 2,
-                "fontAssetId": "16",
-                "text": "t:\nb:\nl:\nr:",
-                "alignment": "left",
-                "verticalAlignment": "top",
-                "size": null,
-                "color": "ff2b2b",
-                "overrideOpacity": false,
-                "opacity": null
-              },
-              "id": "0"
-            }
-          ],
-          "position": {
-            "x": 0,
-            "y": -5,
-            "z": 1
+            "z": 0
           },
           "orientation": {
             "x": 0,
@@ -753,9 +722,9 @@
       ],
       "components": [],
       "position": {
-        "x": -78,
-        "y": 63,
-        "z": 2
+        "x": -64,
+        "y": 65,
+        "z": 5
       },
       "orientation": {
         "x": 0,

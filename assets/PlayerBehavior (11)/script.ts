@@ -1,5 +1,6 @@
 class PlayerBehavior extends Sup.Behavior {
   
+  public playerNumber:number;
   private actualJump:number;
   private maxJumpSize:number;
   private minJumpSize:number;
@@ -11,6 +12,9 @@ class PlayerBehavior extends Sup.Behavior {
   private variableText:Sup.Actor;
   private hitBoxPunch:Sup.ArcadePhysics2D.Body;
   private walkspeed;
+  private timeBetweenPunch=5;
+  private lastPunch=0;
+  private controleScheme;
   
   awake() {
     this.walkspeed=50;
@@ -22,8 +26,15 @@ class PlayerBehavior extends Sup.Behavior {
     this.textBoxBackground = this.actor.getChild("JumpVariableTextBackground");
     this.variableText = this.actor.getChild("VelocityVariableText");
     this.hitBoxPunch = this.actor.getChild("HitBoxPunch").arcadeBody2D;
- 
-    
+    if (this.playerNumber == 0){
+      this.controleScheme = {left:'Q',right:'D',up:'Z',down:'S',punch:'X',jump:'C',dash:'V',
+                             left2:'A',right2:'D',up2:'W',down2:'S',punch2:'X',jump2:'C',dash2:'V'};
+    } 
+    if (this.playerNumber == 1){
+      this.controleScheme = {left:'LEFT',right:'RIGHT',up:'UP',down:'DOWN',punch:'I',jump:'O',dash:'P',
+                             left2:'LEFT',right2:'RIGHT',up2:'UP',down2:'DOWN',punch2:'NUMPAD1',jump2:'NUMPAD2',dash2:'NUMPAD3'};
+    }
+   
   }
   
   update() {
@@ -43,14 +54,14 @@ class PlayerBehavior extends Sup.Behavior {
     //13 = down
     //14 = left
     //15 = right
-    var leftIsDown = Sup.Input.isKeyDown('Q') || Sup.Input.isGamepadButtonDown(0,14);//Dpad left
-    var rightIsDown = Sup.Input.isKeyDown('D') || Sup.Input.isGamepadButtonDown(0,15);//Dpad right
-    var upIsDown = Sup.Input.isKeyDown('Z') || Sup.Input.isGamepadButtonDown(0,12);//Dpad up
-    var downIsDown = Sup.Input.isKeyDown('S') || Sup.Input.isGamepadButtonDown(0,13);//Dpad down
-    var jumpIsPressed = Sup.Input.wasKeyJustPressed('SPACE') || Sup.Input.wasGamepadButtonJustPressed(0,0);//croix
-    var punchIsPressed = Sup.Input.wasKeyJustPressed('U') || Sup.Input.wasGamepadButtonJustPressed(0,2);//carré
-    var dashIsDown = Sup.Input.isKeyDown('I') || Sup.Input.isGamepadButtonDown(0,1);//rond
-    var dashWasJustReleased = Sup.Input.wasKeyJustReleased('I') || Sup.Input.wasGamepadButtonJustReleased(0,1);//rond
+    var leftIsDown = Sup.Input.isKeyDown(this.controleScheme.left) || Sup.Input.isKeyDown(this.controleScheme.left2) || Sup.Input.isGamepadButtonDown(this.playerNumber,14);//Dpad left
+    var rightIsDown = Sup.Input.isKeyDown(this.controleScheme.right) || Sup.Input.isKeyDown(this.controleScheme.right2) || Sup.Input.isGamepadButtonDown(this.playerNumber,15);//Dpad right
+    var upIsDown = Sup.Input.isKeyDown(this.controleScheme.up) || Sup.Input.isKeyDown(this.controleScheme.up2) || Sup.Input.isGamepadButtonDown(this.playerNumber,12);//Dpad up
+    var downIsDown = Sup.Input.isKeyDown(this.controleScheme.down) || Sup.Input.isKeyDown(this.controleScheme.down2) || Sup.Input.isGamepadButtonDown(this.playerNumber,13);//Dpad down
+    var jumpIsPressed = Sup.Input.wasKeyJustPressed(this.controleScheme.jump) || Sup.Input.wasKeyJustPressed(this.controleScheme.jump2) || Sup.Input.wasGamepadButtonJustPressed(this.playerNumber,0);//croix
+    var punchIsPressed = Sup.Input.wasKeyJustPressed(this.controleScheme.punch) || Sup.Input.wasKeyJustPressed(this.controleScheme.punch2) || Sup.Input.wasGamepadButtonJustPressed(this.playerNumber,2);//carré
+    var dashIsDown = Sup.Input.isKeyDown(this.controleScheme.dash) || Sup.Input.isKeyDown(this.controleScheme.dash2) || Sup.Input.isGamepadButtonDown(this.playerNumber,1);//rond
+    var dashWasJustReleased = Sup.Input.wasKeyJustReleased(this.controleScheme.dash) || Sup.Input.wasKeyJustReleased(this.controleScheme.dash2) || Sup.Input.wasGamepadButtonJustReleased(this.playerNumber,1);//rond
     
     var punch=false;
     var x=this.getVelocity();
@@ -85,7 +96,7 @@ class PlayerBehavior extends Sup.Behavior {
     if (punchIsPressed)
       {
         punch=true;
-        this.punch();
+   
       }
     
     if (positionY> (-59))
@@ -144,23 +155,28 @@ class PlayerBehavior extends Sup.Behavior {
     if (positionX<(-78)) {
       if (x<0) {x=10;}
     }
-    
+    this.lastPunch++;
+    if (this.isPlayingPunchAnimation() && this.canPunch()) {this.punch()};
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(x,y,0);
     this.animate(x,y,chargeJump,punch); 
-    this.testTouches();
+    this.moveHitBox();
+  }
+  
+  canPunch(){
+    return (this.lastPunch>this.timeBetweenPunch);
   }
   
   animate(x,y,chargeJump,punch) {
-    var leftIsDown = Sup.Input.isKeyDown('Q') || Sup.Input.isGamepadButtonDown(0,14);
-    var rightIsDown = Sup.Input.isKeyDown('D') || Sup.Input.isGamepadButtonDown(0,15);
-    var upIsDown = Sup.Input.isKeyDown('Z') || Sup.Input.isGamepadButtonDown(0,12);
-    var downIsDown = Sup.Input.isKeyDown('S') || Sup.Input.isGamepadButtonDown(0,13);
+    var leftIsDown = Sup.Input.isKeyDown(this.controleScheme.left) || Sup.Input.isKeyDown(this.controleScheme.left2) || Sup.Input.isGamepadButtonDown(this.playerNumber,14);//Dpad left
+    var rightIsDown = Sup.Input.isKeyDown(this.controleScheme.right) || Sup.Input.isKeyDown(this.controleScheme.right2) || Sup.Input.isGamepadButtonDown(this.playerNumber,15);//Dpad right
+    var upIsDown = Sup.Input.isKeyDown(this.controleScheme.up) || Sup.Input.isKeyDown(this.controleScheme.up2) || Sup.Input.isGamepadButtonDown(this.playerNumber,12);//Dpad up
+    var downIsDown = Sup.Input.isKeyDown(this.controleScheme.down) || Sup.Input.isKeyDown(this.controleScheme.down2) || Sup.Input.isGamepadButtonDown(this.playerNumber,13);//Dpad down
     var run = false;
     var facingLeft = this.actor.spriteRenderer.getHorizontalFlip();
     if (x>5 || x<-5) {run = true}; 
     if (rightIsDown){ facingLeft=false;}
     if (leftIsDown){ facingLeft=true;}
-    if ((punch || this.isPlayingPunchAnimation())&&this.actor.spriteRenderer.getAnimationFrameIndex()!=5) {
+    if ((punch || this.isPlayingPunchAnimation())&&this.actor.spriteRenderer.getAnimationFrameIndex()!=3) {
       if (!this.isPlayingPunchAnimation()){
         var animationName = "punchDirect";
         if (upIsDown){ animationName="punchUp";}
@@ -223,10 +239,11 @@ class PlayerBehavior extends Sup.Behavior {
   }
   
   punch(){
+    this.lastPunch=0;
     var test = Sup.ArcadePhysics2D.intersects(this.hitBoxPunch,Sup.getActor("Ball").arcadeBody2D);
     if (test) {
-      var upIsDown = Sup.Input.isKeyDown('Z') || Sup.Input.isGamepadButtonDown(0,12);
-      var downIsDown = Sup.Input.isKeyDown('S') || Sup.Input.isGamepadButtonDown(0,13);
+      var upIsDown = Sup.Input.isKeyDown(this.controleScheme.up) || Sup.Input.isKeyDown(this.controleScheme.up2) || Sup.Input.isGamepadButtonDown(this.playerNumber,12);//Dpad up
+      var downIsDown = Sup.Input.isKeyDown(this.controleScheme.down) || Sup.Input.isKeyDown(this.controleScheme.down2) || Sup.Input.isGamepadButtonDown(this.playerNumber,13);//Dpad down
       var left = this.actor.spriteRenderer.getHorizontalFlip();
       var right = !this.actor.spriteRenderer.getHorizontalFlip();
       var up = upIsDown;
@@ -235,9 +252,7 @@ class PlayerBehavior extends Sup.Behavior {
     }
     
   }
-  testTouches(){
-    var test = Sup.ArcadePhysics2D.intersects(this.hitBoxPunch,Sup.getActor("Ball").arcadeBody2D);
-    Sup.getActor("ab2dTouches").textRenderer.setText(test.toString());
+  moveHitBox(){
     if (this.actor.spriteRenderer.getHorizontalFlip()){
       this.hitBoxPunch.warpPosition(this.actor.getPosition().x-11,this.actor.getPosition().y);
     }
