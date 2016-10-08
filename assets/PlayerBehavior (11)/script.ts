@@ -27,14 +27,13 @@ class PlayerBehavior extends Sup.Behavior {
     this.variableText = this.actor.getChild("VelocityVariableText");
     this.hitBoxPunch = this.actor.getChild("HitBoxPunch").arcadeBody2D;
     if (this.playerNumber == 0){
-      this.controleScheme = {left:'Q',right:'D',up:'Z',down:'S',punch:'X',jump:'C',dash:'V',
-                             left2:'A',right2:'D',up2:'W',down2:'S',punch2:'X',jump2:'C',dash2:'V'};
+      this.controleScheme = {left:'Q',right:'D',up:'Z',down:'S',punch:'V',jump:'B',dash:'N',
+                             left2:'A',right2:'D',up2:'W',down2:'S',punch2:'V',jump2:'B',dash2:'N'};
     } 
     if (this.playerNumber == 1){
       this.controleScheme = {left:'LEFT',right:'RIGHT',up:'UP',down:'DOWN',punch:'I',jump:'O',dash:'P',
                              left2:'LEFT',right2:'RIGHT',up2:'UP',down2:'DOWN',punch2:'NUMPAD1',jump2:'NUMPAD2',dash2:'NUMPAD3'};
     }
-   
   }
   
   update() {
@@ -77,13 +76,13 @@ class PlayerBehavior extends Sup.Behavior {
     var positionY = this.actor.getY();
     var positionX = this.actor.getX();
     var canjump=true;
+    
     if (leftIsDown)
     {
       if (x>(-this.maxSpeed)){
         x+=-this.walkspeed;
       }
     }
-     
 
     if (rightIsDown)
       {
@@ -91,7 +90,6 @@ class PlayerBehavior extends Sup.Behavior {
           x+=this.walkspeed;
         }
       }
-    
 
     if (punchIsPressed)
       {
@@ -121,7 +119,7 @@ class PlayerBehavior extends Sup.Behavior {
       }
      
       if (this.actualJump<this.maxJumpSize){
-        this.actualJump+=20;
+        this.actualJump+=18;
       }
     }
     if (dashWasJustReleased && canjump)
@@ -187,7 +185,7 @@ class PlayerBehavior extends Sup.Behavior {
     else {
       if (chargeJump){
         this.actor.spriteRenderer.setAnimation("charginJump",true);
-        if (this.actualJump>this.minJumpSize && this.actualJump<this.maxJumpSize) {
+        if (this.actualJump<this.maxJumpSize) {
           this.jumpLoadingSoundPlayer.play();
         }
       }
@@ -250,8 +248,8 @@ class PlayerBehavior extends Sup.Behavior {
       var down = downIsDown;
       Sup.getActor("Ball").getBehavior(BallBehavior).gotPunched(left,right,up,down);
     }
-    
   }
+  
   moveHitBox(){
     if (this.actor.spriteRenderer.getHorizontalFlip()){
       this.hitBoxPunch.warpPosition(this.actor.getPosition().x-11,this.actor.getPosition().y);

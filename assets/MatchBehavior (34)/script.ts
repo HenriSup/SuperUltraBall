@@ -8,6 +8,11 @@ class MatchBehavior extends Sup.Behavior {
   private leftScore:number=0;
   private rightScore:number=0;
   private actualScore:number=0;
+  private actualScoreVisibility:number=0;
+  private visibilityTime:number=120;
+  private hasBeenShakingFor:number;
+  private timeShaking:number=60;
+  private startShake:boolean=false;
  
   awake() {
     this.leftScoreActor = Sup.getActor("LeftScore");
@@ -31,6 +36,7 @@ class MatchBehavior extends Sup.Behavior {
     this.updateScores();
     this.checkScores();
     Sup.log(this.leftScore+" "+this.actualScore+" "+this.rightScore);
+    this.shakeCam(this.startShake);
   }
   
   updateScores(){
@@ -70,6 +76,7 @@ class MatchBehavior extends Sup.Behavior {
   }
   addActualScore(){
     this.actualScore++;
+    this.actualScoreVisibility=this.visibilityTime;
   }
   resetLeftScore(){
     this.leftScore=0;
@@ -79,6 +86,42 @@ class MatchBehavior extends Sup.Behavior {
   }
   resetActualScore(){
     this.actualScore=0;
+  }
+  
+  actualScoreVisiblityCheck(){
+    if (this.actualScoreVisibility>0){
+      this.actualScoreVisibility--;
+    }
+    if (this.actualScoreVisibility<=0){
+      this.setActualScoreTextRenderer("");
+    }
+  }
+  
+  shakeCam(startShake){
+    if (startShake){
+      this.hasBeenShakingFor=0;
+      var lower = -1;
+      var higher = 1;
+
+      var x = (Math.random() * (higher-lower)) + lower;
+      var y = (Math.random() * (higher-lower)) + lower;
+      Sup.getActor("Camera").setPosition(x,y,20);
+    }
+    else {
+      if (this.hasBeenShakingFor<this.timeShaking){
+        this.hasBeenShakingFor++;
+        var lower = -1;
+        var higher = 1;
+
+        var x = (Math.random() * (higher-lower)) + lower;
+        var y = (Math.random() * (higher-lower)) + lower;
+        Sup.getActor("Camera").setPosition(x,y,20);
+      }
+      else {
+      
+        Sup.getActor("Camera").setPosition(0,0,20);
+      }
+    }
   }
 }
 Sup.registerBehavior(MatchBehavior);

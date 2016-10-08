@@ -7,6 +7,10 @@ class BallBehavior extends Sup.Behavior {
   private shouldPlayOn=0;
   private actualScore:number;
   private matchArbitrator:MatchBehavior;
+  private lastHit=10;
+  private timeBetweenHit=6;
+  private lastNetHit=21;
+  private timeBetweenNetHit=20;
   awake() {
     this.matchArbitrator = Sup.getActor("MatchArbitrator").getBehavior(MatchBehavior);
     this.hitBox = this.actor.arcadeBody2D;
@@ -14,13 +18,14 @@ class BallBehavior extends Sup.Behavior {
 
 
   update() {
+    this.lastHit++;
     var velocityX=this.actor.cannonBody.body.velocity.x;
     var velocityY=this.actor.cannonBody.body.velocity.y;
     this.actor.cannonBody.body.linearDamping=0.5;
     var positionY = this.actor.getY();
     var positionX = this.actor.getX();
     this.shouldShake=false;
-    
+    this.lastNetHit++;
     if (positionY>(-66)) {
       velocityY+=-5;
     }
@@ -40,6 +45,24 @@ class BallBehavior extends Sup.Behavior {
       this.actor.setX(73);
       velocityX=-(Math.abs(velocityX));
       this.playSound();
+    }
+    
+    if (this.checkForNet()){
+      if (this.actor.getPosition().y<=-17){
+        velocityY=(Math.abs(velocityY));
+      }
+      if (this.actor.getPosition().x<0){
+        velocityX=-(Math.abs(velocityX));
+      }
+      if (this.actor.getPosition().x>0){
+        velocityX=(Math.abs(velocityX));
+      }
+      if (this.lastNetHit>=this.timeBetweenNetHit){
+        this.playSound();
+        this.lastNetHit=0;
+      }
+      
+        
     }
     
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
@@ -81,6 +104,11 @@ class BallBehavior extends Sup.Behavior {
     
   }
   
+  checkForNet(){
+    return Sup.ArcadePhysics2D.intersects(this.hitBox,Sup.getActor("Net").arcadeBody2D);
+  
+  }
+  
   Animate(hit){
     if (hit) {
       this.actor.spriteRenderer.setAnimation("ballHit",false);
@@ -120,23 +148,30 @@ class BallBehavior extends Sup.Behavior {
   }
   
   gotPunched(left,right,up,down){
-    var velocityX=this.actor.cannonBody.body.velocity.x;
-    var velocityY=this.actor.cannonBody.body.velocity.y;
-    if (left){velocityX=-Math.abs(velocityX)-50;}
-    if (right){velocityX=Math.abs(velocityX)+50;}
-    if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
-    if (down){velocityY+=-(Math.abs(velocityY)*0.8)-50;}
-    if (!down && !up){
+    if (this.lastHit>this.timeBetweenHit){
+      var velocityX=this.actor.cannonBody.body.velocity.x;
+      var velocityY=this.actor.cannonBody.body.velocity.y;
       if (left){velocityX=-Math.abs(velocityX)-50;}
       if (right){velocityX=Math.abs(velocityX)+50;}
+      if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
+      if (down){
+        velocityY+=-(Math.abs(velocityY)*0.8);
+        if (left){velocityX=-Math.abs(velocityX)-200;}
+        if (right){velocityX=Math.abs(velocityX)+200;}
+      }
+      if (!down && !up){
+        if (left){velocityX=-Math.abs(velocityX)-50;}
+        if (right){velocityX=Math.abs(velocityX)+50;}
+      }
+      this.playSound();
+      this.shouldShake = true;
+      this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
+      this.shakeCam(true);
+      this.Animate(true);
+      this.actualScore++;
+      this.matchArbitrator.addActualScore();
+      this.lastHit=0;
     }
-    this.playSound();
-    this.shouldShake = true;
-    this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
-    this.shakeCam(true);
-    this.Animate(true);
-    this.actualScore++;
-    this.matchArbitrator.addActualScore();
   }
   
   touchTheGround(){
