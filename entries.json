@@ -1,5 +1,5 @@
 {
-  "nextEntryId": 38,
+  "nextEntryId": 42,
   "nodes": [
     {
       "id": "0",
@@ -36,6 +36,11 @@
         {
           "id": "37",
           "name": "TransitionPrefab",
+          "type": "scene"
+        },
+        {
+          "id": "40",
+          "name": "TextHitPrefab",
           "type": "scene"
         }
       ]
@@ -106,6 +111,11 @@
           "id": "36",
           "name": "TransitionMatch",
           "type": "sprite"
+        },
+        {
+          "id": "39",
+          "name": "Cache",
+          "type": "sprite"
         }
       ]
     },
@@ -139,6 +149,16 @@
     {
       "id": "11",
       "name": "PlayerBehavior",
+      "type": "script"
+    },
+    {
+      "id": "41",
+      "name": "TextHitBehavior",
+      "type": "script"
+    },
+    {
+      "id": "38",
+      "name": "TransitionBehavior",
       "type": "script"
     },
     {

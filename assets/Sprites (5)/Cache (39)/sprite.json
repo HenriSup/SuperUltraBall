@@ -6,27 +6,19 @@
   "filtering": "pixelated",
   "wrapping": "clampToEdge",
   "pixelsPerUnit": 1,
-  "framesPerSecond": 24,
+  "framesPerSecond": 10,
   "opacity": 1,
   "alphaTest": 0,
   "frameOrder": "rows",
   "grid": {
-    "width": 160,
-    "height": 144
+    "width": 500,
+    "height": 500
   },
   "origin": {
     "x": 0.5,
     "y": 0.5
   },
-  "animations": [
-    {
-      "id": "0",
-      "name": "Transition",
-      "startFrameIndex": 0,
-      "endFrameIndex": 48,
-      "speed": 1
-    }
-  ],
+  "animations": [],
   "mapSlots": {
     "map": "map",
     "light": null,

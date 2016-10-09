@@ -1,48 +1,38 @@
 class MatchBehavior extends Sup.Behavior {
   private leftScoreTextRenderers:Sup.TextRenderer[];
   private rightScoreTextRenderers:Sup.TextRenderer[];
-  private actualScoreTextRenderers:Sup.TextRenderer[];
   private leftScoreActor:Sup.Actor;
   private rightScoreActor:Sup.Actor;
-  private actualScoreActor:Sup.Actor;
   private leftScore:number=0;
   private rightScore:number=0;
   private actualScore:number=0;
-  private actualScoreVisibility:number=0;
-  private visibilityTime:number=120;
   private hasBeenShakingFor:number;
   private timeShaking:number=60;
   private startShake:boolean=false;
+  private serviceLeft=true;
  
   awake() {
     this.leftScoreActor = Sup.getActor("LeftScore");
     this.rightScoreActor = Sup.getActor("RightScore");
-    this.actualScoreActor = Sup.getActor("ActualScore");
     var leftScoreChildActors = this.leftScoreActor.getChildren();
     var rightScoreChildActors = this.rightScoreActor.getChildren();
-    var actualScoreChildActors = this.actualScoreActor.getChildren();
     var leftScoretextRendererArray = [];
     var rightScoretextRendererArray = [];
-    var actualScoretextRendererArray = [];
     leftScoreChildActors.forEach(function(element){leftScoretextRendererArray.push(element.textRenderer)});
     rightScoreChildActors.forEach(function(element){rightScoretextRendererArray.push(element.textRenderer)});
-    actualScoreChildActors.forEach(function(element){actualScoretextRendererArray.push(element.textRenderer)});
     this.leftScoreTextRenderers = leftScoretextRendererArray;
     this.rightScoreTextRenderers = rightScoretextRendererArray;
-    this.actualScoreTextRenderers = actualScoretextRendererArray;
   }
 
   update() {
     this.updateScores();
     this.checkScores();
-    Sup.log(this.leftScore+" "+this.actualScore+" "+this.rightScore);
     this.shakeCam(this.startShake);
   }
   
   updateScores(){
     this.setLeftScoreTextRenderer(this.leftScore);
     this.setRightScoreTextRenderer(this.rightScore);
-    this.setActualScoreTextRenderer(this.actualScore);
   }
   
   checkScores(){
@@ -54,7 +44,7 @@ class MatchBehavior extends Sup.Behavior {
   }
   
   winner(Player) {
-    // afficher winner sur le nom du joueur, faire bumper le winner
+    // afficher winner sur le nom du joueur, faire bumper le text winner
     // transformer le second joueur ?
   }
   
@@ -64,19 +54,19 @@ class MatchBehavior extends Sup.Behavior {
   setRightScoreTextRenderer(text){
     this.rightScoreTextRenderers.forEach(function(textRenderer){textRenderer.setText(text);});
   }
-  setActualScoreTextRenderer(text){
-    this.actualScoreTextRenderers.forEach(function(textRenderer){textRenderer.setText(text);});
-  }
   
   addLeftScore(){
     this.leftScore+=this.actualScore;
+    this.serviceLeft=false;
+    this.nextRound();
   }
   addRightScore(){
     this.rightScore+=this.actualScore;
+    this.serviceLeft=true;
+    this.nextRound();
   }
   addActualScore(){
     this.actualScore++;
-    this.actualScoreVisibility=this.visibilityTime;
   }
   resetLeftScore(){
     this.leftScore=0;
@@ -88,15 +78,27 @@ class MatchBehavior extends Sup.Behavior {
     this.actualScore=0;
   }
   
-  actualScoreVisiblityCheck(){
-    if (this.actualScoreVisibility>0){
-      this.actualScoreVisibility--;
-    }
-    if (this.actualScoreVisibility<=0){
-      this.setActualScoreTextRenderer("");
-    }
+  nextRound(){
+    var scene = Sup.appendScene("prefab/TransitionPrefab")[0];
+    scene.setPosition(0,0,19);
   }
   
+  restartRound(){
+    Sup.getActor('Player1').cannonBody.body.position=new CANNON.Vec3(-50,-59,1);
+    Sup.getActor('Player1').spriteRenderer.setHorizontalFlip(false);
+    Sup.getActor('Player2').cannonBody.body.position=new CANNON.Vec3(50,-59,1);
+    Sup.getActor('Player2').spriteRenderer.setHorizontalFlip(true);
+    if (this.serviceLeft){
+      Sup.getActor('Ball').cannonBody.body.position=new CANNON.Vec3(-40,-30,1);
+      Sup.getActor('Ball').getBehavior(BallBehavior).resetFirstHit();
+    } else {
+      Sup.getActor('Ball').cannonBody.body.position=new CANNON.Vec3(40,-30,1);
+      Sup.getActor('Ball').getBehavior(BallBehavior).resetFirstHit();
+    }
+    
+    
+  }
+
   shakeCam(startShake){
     if (startShake){
       this.hasBeenShakingFor=0;

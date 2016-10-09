@@ -34,6 +34,31 @@
       "line": 0,
       "parentBehavior": null,
       "properties": []
+    },
+    "TransitionBehavior": {
+      "scriptId": "38",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
+    },
+    "TextHitBehavior": {
+      "scriptId": "41",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": [
+        {
+          "name": "activated",
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "name": "timeLeftAlive",
+          "type": "number"
+        }
+      ]
     }
   }
 }

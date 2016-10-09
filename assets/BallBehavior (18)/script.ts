@@ -11,73 +11,85 @@ class BallBehavior extends Sup.Behavior {
   private timeBetweenHit=6;
   private lastNetHit=21;
   private timeBetweenNetHit=20;
+  private firstHit=false;
   awake() {
+    this.actualScore=0;
     this.matchArbitrator = Sup.getActor("MatchArbitrator").getBehavior(MatchBehavior);
     this.hitBox = this.actor.arcadeBody2D;
   }
 
-
   update() {
-    this.lastHit++;
-    var velocityX=this.actor.cannonBody.body.velocity.x;
-    var velocityY=this.actor.cannonBody.body.velocity.y;
-    this.actor.cannonBody.body.linearDamping=0.5;
-    var positionY = this.actor.getY();
-    var positionX = this.actor.getX();
-    this.shouldShake=false;
-    this.lastNetHit++;
-    if (positionY>(-66)) {
-      velocityY+=-5;
-    }
-    else{
-      velocityY=(Math.abs(velocityY));
-      this.actor.setY(-65);
-      this.playSound();
-      this.touchTheGround();
-    }  
-    
-    if (positionX<(-74)) {
-      this.actor.setX(-73);
-      velocityX=Math.abs(velocityX);
-      this.playSound();
-    }
-    if (positionX>(74)) {
-      this.actor.setX(73);
-      velocityX=-(Math.abs(velocityX));
-      this.playSound();
-    }
-    
-    if (this.checkForNet()){
-      if (this.actor.getPosition().y<=-17){
-        velocityY=(Math.abs(velocityY));
-      }
-      if (this.actor.getPosition().x<0){
-        velocityX=-(Math.abs(velocityX));
-      }
-      if (this.actor.getPosition().x>0){
-        velocityX=(Math.abs(velocityX));
-      }
-      if (this.lastNetHit>=this.timeBetweenNetHit){
-        this.playSound();
-        this.lastNetHit=0;
-      }
+   
+      this.lastHit++;
+      var velocityX=this.actor.cannonBody.body.velocity.x;
+      var velocityY=this.actor.cannonBody.body.velocity.y;
       
-        
+      this.actor.cannonBody.body.linearDamping=0.5;
+      var positionY = this.actor.getY();
+      var positionX = this.actor.getX();
+      this.shouldShake=false;
+      this.lastNetHit++;
+     
+      if (positionY>(-66)) {
+        velocityY+=-5;
+      }
+      else{
+        velocityY=(Math.abs(velocityY));
+        this.actor.setY(-65);
+        this.playSound(false);
+        this.touchTheGround();
+      }  
+
+      if (positionX<(-74)) {
+        this.actor.setX(-73);
+        velocityX=Math.abs(velocityX);
+        this.playSound(false);
+      }
+      if (positionX>(74)) {
+        this.actor.setX(73);
+        velocityX=-(Math.abs(velocityX));
+        this.playSound(false);
+      }
+
+      if (this.checkForNet()){
+        if (this.actor.getPosition().y<=-17){
+          velocityY=(Math.abs(velocityY));
+        }
+        if (this.actor.getPosition().x<0){
+          velocityX=-(Math.abs(velocityX));
+        }
+        if (this.actor.getPosition().x>0){
+          velocityX=(Math.abs(velocityX));
+        }
+        if (this.lastNetHit>=this.timeBetweenNetHit){
+          this.playSound(false);
+          this.lastNetHit=0;
+        }
+      }
+       
+
+   
+  
+    this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
+    if (!this.firstHit){
+      this.actor.cannonBody.body.velocity=new CANNON.Vec3(0,0,0);
     }
     
-    this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
     
     var trail = Sup.appendScene("prefab/BallTrailPrefab")[0];
     trail.setPosition(this.actor.getPosition().x,this.actor.getPosition().y,this.actor.getPosition().z-1);
     this.shakeCam(this.shouldShake);
     this.Animate(this.shouldShake);
     this.hitBox.warpPosition(this.actor.getPosition().x,this.actor.getPosition().y);
+    
   }
   
-  playSound(){
+  playSound(isAPunch){
       var volume = 1;   
       var maxSpeed = Math.max(Math.abs(this.actor.cannonBody.body.velocity.y),Math.abs(this.actor.cannonBody.body.velocity.x)); 
-      
+      if (isAPunch){
+        maxSpeed=300;
+      }
       if (maxSpeed < 20) {
         volume=0;
       } else if (maxSpeed >= 20 && maxSpeed <40) {
@@ -148,6 +160,7 @@ class BallBehavior extends Sup.Behavior {
   }
   
   gotPunched(left,right,up,down){
+    if (!this.firstHit) this.firstHit=true;
     if (this.lastHit>this.timeBetweenHit){
       var velocityX=this.actor.cannonBody.body.velocity.x;
       var velocityY=this.actor.cannonBody.body.velocity.y;
@@ -163,25 +176,38 @@ class BallBehavior extends Sup.Behavior {
         if (left){velocityX=-Math.abs(velocityX)-50;}
         if (right){velocityX=Math.abs(velocityX)+50;}
       }
-      this.playSound();
+      this.playSound(true);
       this.shouldShake = true;
       this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
       this.shakeCam(true);
       this.Animate(true);
       this.actualScore++;
       this.matchArbitrator.addActualScore();
+      var textHit = Sup.appendScene("prefab/TextHitPrefab")[0];
+      textHit.cannonBody.body.position=new CANNON.Vec3(this.actor.getPosition().x,this.actor.getPosition().z,17);
+      textHit.getBehavior(TextHitBehavior).activated=true;
+      textHit.getBehavior(TextHitBehavior).value=this.actualScore;
       this.lastHit=0;
     }
+    
   }
   
   touchTheGround(){
-    if (this.actor.getPosition().x<0){
-      this.matchArbitrator.addRightScore();
-    } else if (this.actor.getPosition().x>0){
-      this.matchArbitrator.addLeftScore();
+    if (this.actualScore>0){
+       
+      if (this.actor.getPosition().x<0){
+        this.matchArbitrator.addRightScore();
+      } else if (this.actor.getPosition().x>0){
+        this.matchArbitrator.addLeftScore();
+      }
     }
+    
     this.actualScore = 0;
     this.matchArbitrator.resetActualScore();
+  }
+  
+  resetFirstHit(){
+    this.firstHit=false;
   }
   
 }

@@ -11,7 +11,6 @@ class BallIndicatorBehavior extends Sup.Behavior {
     var textRendererArray = [];
     childActors.forEach(function(element){textRendererArray.push(element.textRenderer)});
     this.textRenderers = textRendererArray;
-    Sup.log(this.textRenderers);
   }
 
   update() {
