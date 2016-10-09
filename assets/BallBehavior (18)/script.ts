@@ -12,6 +12,7 @@ class BallBehavior extends Sup.Behavior {
   private lastNetHit=21;
   private timeBetweenNetHit=20;
   private firstHit=false;
+  private canBeHit=true;
   awake() {
     this.actualScore=0;
     this.matchArbitrator = Sup.getActor("MatchArbitrator").getBehavior(MatchBehavior);
@@ -122,14 +123,20 @@ class BallBehavior extends Sup.Behavior {
   }
   
   Animate(hit){
-    if (hit) {
-      this.actor.spriteRenderer.setAnimation("ballHit",false);
-    }
-    else {
-      if (this.actor.spriteRenderer.getAnimationFrameIndex()>=3){
-        this.actor.spriteRenderer.setAnimation("ball",false);
+    if (!this.firstHit){
+        this.actor.spriteRenderer.setAnimation("ballWait",true);
+    } else {
+      if (hit) {
+        this.actor.spriteRenderer.setAnimation("ballHit",false);
+      }
+      else {
+        if (this.actor.spriteRenderer.getAnimationFrameIndex()>=3){
+          this.actor.spriteRenderer.setAnimation("ball",false);
+        }
+
       }
     }
+    
   }
   
   shakeCam(startShake){
@@ -160,34 +167,36 @@ class BallBehavior extends Sup.Behavior {
   }
   
   gotPunched(left,right,up,down){
-    if (!this.firstHit) this.firstHit=true;
-    if (this.lastHit>this.timeBetweenHit){
-      var velocityX=this.actor.cannonBody.body.velocity.x;
-      var velocityY=this.actor.cannonBody.body.velocity.y;
-      if (left){velocityX=-Math.abs(velocityX)-50;}
-      if (right){velocityX=Math.abs(velocityX)+50;}
-      if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
-      if (down){
-        velocityY+=-(Math.abs(velocityY)*0.8);
-        if (left){velocityX=-Math.abs(velocityX)-200;}
-        if (right){velocityX=Math.abs(velocityX)+200;}
-      }
-      if (!down && !up){
+    if (this.canBeHit){
+      if (!this.firstHit) this.firstHit=true;
+      if (this.lastHit>this.timeBetweenHit){
+        var velocityX=this.actor.cannonBody.body.velocity.x;
+        var velocityY=this.actor.cannonBody.body.velocity.y;
         if (left){velocityX=-Math.abs(velocityX)-50;}
         if (right){velocityX=Math.abs(velocityX)+50;}
+        if (up){velocityY=(Math.abs(velocityY)*0.8)+200;}
+        if (down){
+          velocityY+=-(Math.abs(velocityY)*0.8);
+          if (left){velocityX=-Math.abs(velocityX)-200;}
+          if (right){velocityX=Math.abs(velocityX)+200;}
+        }
+        if (!down && !up){
+          if (left){velocityX=-Math.abs(velocityX)-50;}
+          if (right){velocityX=Math.abs(velocityX)+50;}
+        }
+        this.playSound(true);
+        this.shouldShake = true;
+        this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
+        this.shakeCam(true);
+        this.Animate(true);
+        this.actualScore++;
+        this.matchArbitrator.addActualScore();
+        var textHit = Sup.appendScene("prefab/TextHitPrefab")[0];
+        textHit.cannonBody.body.position=new CANNON.Vec3(this.actor.getPosition().x,this.actor.getPosition().z,17);
+        textHit.getBehavior(TextHitBehavior).activated=true;
+        textHit.getBehavior(TextHitBehavior).value=this.actualScore;
+        this.lastHit=0;
       }
-      this.playSound(true);
-      this.shouldShake = true;
-      this.actor.cannonBody.body.velocity=new CANNON.Vec3(velocityX,velocityY,0);
-      this.shakeCam(true);
-      this.Animate(true);
-      this.actualScore++;
-      this.matchArbitrator.addActualScore();
-      var textHit = Sup.appendScene("prefab/TextHitPrefab")[0];
-      textHit.cannonBody.body.position=new CANNON.Vec3(this.actor.getPosition().x,this.actor.getPosition().z,17);
-      textHit.getBehavior(TextHitBehavior).activated=true;
-      textHit.getBehavior(TextHitBehavior).value=this.actualScore;
-      this.lastHit=0;
     }
     
   }
@@ -201,13 +210,17 @@ class BallBehavior extends Sup.Behavior {
         this.matchArbitrator.addLeftScore();
       }
     }
-    
+    this.canBeHit=false;
     this.actualScore = 0;
     this.matchArbitrator.resetActualScore();
   }
   
   resetFirstHit(){
     this.firstHit=false;
+  }
+  
+  resetCanBeHit(){
+    this.canBeHit = true;
   }
   
 }

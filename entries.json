@@ -1,9 +1,14 @@
 {
-  "nextEntryId": 42,
+  "nextEntryId": 45,
   "nodes": [
     {
       "id": "0",
       "name": "Match",
+      "type": "scene"
+    },
+    {
+      "id": "44",
+      "name": "Scene",
       "type": "scene"
     },
     {
@@ -41,6 +46,11 @@
         {
           "id": "40",
           "name": "TextHitPrefab",
+          "type": "scene"
+        },
+        {
+          "id": "42",
+          "name": "PlayerScored",
           "type": "scene"
         }
       ]
@@ -145,6 +155,11 @@
           "type": "sound"
         }
       ]
+    },
+    {
+      "id": "43",
+      "name": "PlayerScoredBehavior",
+      "type": "script"
     },
     {
       "id": "11",

@@ -58,12 +58,12 @@ class MatchBehavior extends Sup.Behavior {
   addLeftScore(){
     this.leftScore+=this.actualScore;
     this.serviceLeft=false;
-    this.nextRound();
+    this.nextRound(1);
   }
   addRightScore(){
     this.rightScore+=this.actualScore;
     this.serviceLeft=true;
-    this.nextRound();
+    this.nextRound(2);
   }
   addActualScore(){
     this.actualScore++;
@@ -78,9 +78,11 @@ class MatchBehavior extends Sup.Behavior {
     this.actualScore=0;
   }
   
-  nextRound(){
-    var scene = Sup.appendScene("prefab/TransitionPrefab")[0];
-    scene.setPosition(0,0,19);
+  nextRound(player){
+    var scene = Sup.appendScene("prefab/PlayerScored")[0];
+    scene.setPosition(0,0,18);
+    scene.getBehavior(PlayerScoredBehavior).value="Player "+player+" SCORED ! "
+    scene.getBehavior(PlayerScoredBehavior).activated=true;
   }
   
   restartRound(){
@@ -90,11 +92,12 @@ class MatchBehavior extends Sup.Behavior {
     Sup.getActor('Player2').spriteRenderer.setHorizontalFlip(true);
     if (this.serviceLeft){
       Sup.getActor('Ball').cannonBody.body.position=new CANNON.Vec3(-40,-30,1);
-      Sup.getActor('Ball').getBehavior(BallBehavior).resetFirstHit();
     } else {
       Sup.getActor('Ball').cannonBody.body.position=new CANNON.Vec3(40,-30,1);
-      Sup.getActor('Ball').getBehavior(BallBehavior).resetFirstHit();
+      
     }
+    Sup.getActor('Ball').getBehavior(BallBehavior).resetFirstHit();
+    Sup.getActor('Ball').getBehavior(BallBehavior).resetCanBeHit();
     
     
   }

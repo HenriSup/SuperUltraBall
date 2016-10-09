@@ -153,6 +153,17 @@ class PlayerBehavior extends Sup.Behavior {
     if (positionX<(-78)) {
       if (x<0) {x=10;}
     }
+    
+    if (positionX<4 && positionX>-4){
+      if(positionY<-11){
+        if(positionX<0){
+          if (x>0) {x=-10;}
+        }
+        if(positionX>0){
+          if (x<0) {x=10;}
+        }
+      }
+    }
     this.lastPunch++;
     if (this.isPlayingPunchAnimation() && this.canPunch()) {this.punch()};
     this.actor.cannonBody.body.velocity=new CANNON.Vec3(x,y,0);

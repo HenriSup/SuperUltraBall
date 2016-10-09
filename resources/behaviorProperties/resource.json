@@ -59,6 +59,21 @@
           "type": "number"
         }
       ]
+    },
+    "PlayerScoredBehavior": {
+      "scriptId": "43",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": [
+        {
+          "name": "activated",
+          "type": "boolean"
+        },
+        {
+          "name": "timeLeftAlive",
+          "type": "number"
+        }
+      ]
     }
   }
 }
