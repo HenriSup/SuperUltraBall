@@ -66,14 +66,55 @@
       "parentBehavior": null,
       "properties": [
         {
-          "name": "activated",
-          "type": "boolean"
-        },
-        {
           "name": "timeLeftAlive",
           "type": "number"
         }
       ]
+    },
+    "BotBehavior": {
+      "scriptId": "47",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": [
+        {
+          "name": "playerNumber",
+          "type": "number"
+        }
+      ]
+    },
+    "IntroBehavior": {
+      "scriptId": "61",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
+    },
+    "TreeBehavior": {
+      "scriptId": "66",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": [
+        {
+          "name": "moveSpeed",
+          "type": "number"
+        }
+      ]
+    },
+    "NetBehavior": {
+      "scriptId": "69",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": [
+        {
+          "name": "moveSpeed",
+          "type": "number"
+        }
+      ]
+    },
+    "MenuBehavior": {
+      "scriptId": "74",
+      "line": 0,
+      "parentBehavior": null,
+      "properties": []
     }
   }
 }

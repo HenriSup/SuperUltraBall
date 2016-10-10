@@ -131,9 +131,9 @@ class PlayerBehavior extends Sup.Behavior {
       this.jumpSoundPlayer.play();
       if (this.actualJump>=this.maxJumpSize){
         if (leftIsDown){
-          x+=-this.actualJump/2;
+          x+=-this.actualJump/4;
         }if (rightIsDown){
-          x+=this.actualJump/2;
+          x+=this.actualJump/4;
         }
       }
       y+=this.actualJump*0.9;

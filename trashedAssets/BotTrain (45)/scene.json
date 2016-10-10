@@ -275,7 +275,7 @@
         "y": 1,
         "z": 1
       },
-      "visible": true,
+      "visible": false,
       "layer": 0,
       "prefab": null
     },
@@ -498,11 +498,11 @@
       "prefab": null
     },
     {
-      "id": "26",
-      "name": "Player2",
+      "id": "62",
+      "name": "Bot",
       "children": [
         {
-          "id": "27",
+          "id": "63",
           "name": "JumpVariableTextBackground",
           "children": [],
           "components": [
@@ -511,7 +511,7 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "P2",
+                "text": "P1",
                 "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
@@ -543,7 +543,7 @@
           "prefab": null
         },
         {
-          "id": "28",
+          "id": "64",
           "name": "JumpVariableText",
           "children": [],
           "components": [
@@ -552,7 +552,7 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "P2",
+                "text": "P1",
                 "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
@@ -584,7 +584,7 @@
           "prefab": null
         },
         {
-          "id": "29",
+          "id": "65",
           "name": "HitBoxPunch",
           "children": [],
           "components": [
@@ -637,9 +637,9 @@
           "type": "SpriteRenderer",
           "config": {
             "formatVersion": 1,
-            "spriteAssetId": "30",
+            "spriteAssetId": "9",
             "animationId": "0",
-            "horizontalFlip": true,
+            "horizontalFlip": false,
             "verticalFlip": false,
             "castShadow": false,
             "receiveShadow": false,
@@ -688,7 +688,7 @@
             "propertyValues": {
               "playerNumber": {
                 "type": "number",
-                "value": 1
+                "value": 0
               }
             }
           },
@@ -696,7 +696,7 @@
         }
       ],
       "position": {
-        "x": 50,
+        "x": -50,
         "y": -59,
         "z": 1
       },
@@ -1713,50 +1713,6 @@
         "x": 10,
         "y": 67,
         "z": 3
-      },
-      "orientation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "w": 1
-      },
-      "scale": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "visible": true,
-      "layer": 0,
-      "prefab": null
-    },
-    {
-      "id": "62",
-      "name": "Transition",
-      "children": [],
-      "components": [
-        {
-          "type": "SpriteRenderer",
-          "config": {
-            "formatVersion": 1,
-            "spriteAssetId": "36",
-            "animationId": null,
-            "horizontalFlip": false,
-            "verticalFlip": false,
-            "castShadow": false,
-            "receiveShadow": false,
-            "color": "ffffff",
-            "overrideOpacity": false,
-            "opacity": null,
-            "materialType": "basic",
-            "shaderAssetId": null
-          },
-          "id": "0"
-        }
-      ],
-      "position": {
-        "x": 0,
-        "y": 0,
-        "z": 19
       },
       "orientation": {
         "x": 0,

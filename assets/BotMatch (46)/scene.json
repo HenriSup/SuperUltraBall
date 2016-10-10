@@ -275,7 +275,7 @@
         "y": 1,
         "z": 1
       },
-      "visible": true,
+      "visible": false,
       "layer": 0,
       "prefab": null
     },
@@ -511,7 +511,7 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "P2",
+                "text": "COM",
                 "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
@@ -552,7 +552,7 @@
               "config": {
                 "formatVersion": 2,
                 "fontAssetId": "16",
-                "text": "P2",
+                "text": "COM",
                 "alignment": "center",
                 "verticalAlignment": "center",
                 "size": null,
@@ -595,10 +595,10 @@
                 "type": "box",
                 "movable": false,
                 "width": 27,
-                "height": 25,
+                "height": 49,
                 "offset": {
-                  "x": 1,
-                  "y": 0
+                  "x": -4,
+                  "y": 12
                 },
                 "bounce": {
                   "x": 0,
@@ -637,8 +637,8 @@
           "type": "SpriteRenderer",
           "config": {
             "formatVersion": 1,
-            "spriteAssetId": "30",
-            "animationId": "0",
+            "spriteAssetId": "48",
+            "animationId": "9",
             "horizontalFlip": true,
             "verticalFlip": false,
             "castShadow": false,
@@ -684,7 +684,7 @@
         {
           "type": "Behavior",
           "config": {
-            "behaviorName": "PlayerBehavior",
+            "behaviorName": "BotBehavior",
             "propertyValues": {
               "playerNumber": {
                 "type": "number",
@@ -696,7 +696,7 @@
         }
       ],
       "position": {
-        "x": 50,
+        "x": 5,
         "y": -59,
         "z": 1
       },

@@ -1,14 +1,29 @@
 {
-  "nextEntryId": 45,
+  "nextEntryId": 81,
   "nodes": [
+    {
+      "id": "46",
+      "name": "BotMatch",
+      "type": "scene"
+    },
     {
       "id": "0",
       "name": "Match",
       "type": "scene"
     },
     {
-      "id": "44",
-      "name": "Scene",
+      "id": "77",
+      "name": "Menu",
+      "type": "scene"
+    },
+    {
+      "id": "74",
+      "name": "MenuBehavior",
+      "type": "script"
+    },
+    {
+      "id": "55",
+      "name": "Intro",
       "type": "scene"
     },
     {
@@ -49,9 +64,34 @@
           "type": "scene"
         },
         {
-          "id": "42",
-          "name": "PlayerScored",
+          "id": "52",
+          "name": "Player1Scored",
           "type": "scene"
+        },
+        {
+          "id": "53",
+          "name": "Player2Scored",
+          "type": "scene"
+        },
+        {
+          "id": "65",
+          "name": "TreePrefab",
+          "type": "scene"
+        },
+        {
+          "id": "68",
+          "name": "NetPrefab",
+          "type": "scene"
+        },
+        {
+          "id": "66",
+          "name": "TreeBehavior",
+          "type": "script"
+        },
+        {
+          "id": "69",
+          "name": "NetBehavior",
+          "type": "script"
         }
       ]
     },
@@ -73,6 +113,68 @@
             {
               "id": "30",
               "name": "Gerbil",
+              "type": "sprite"
+            },
+            {
+              "id": "48",
+              "name": "Bot",
+              "type": "sprite"
+            }
+          ]
+        },
+        {
+          "id": "56",
+          "name": "Intro",
+          "type": null,
+          "children": [
+            {
+              "id": "57",
+              "name": "Fond",
+              "type": "sprite"
+            },
+            {
+              "id": "58",
+              "name": "Filet",
+              "type": "sprite"
+            },
+            {
+              "id": "59",
+              "name": "Title",
+              "type": "sprite"
+            },
+            {
+              "id": "54",
+              "name": "NoxiIntro",
+              "type": "sprite"
+            },
+            {
+              "id": "60",
+              "name": "LogoCockyYet",
+              "type": "sprite"
+            },
+            {
+              "id": "64",
+              "name": "Tree",
+              "type": "sprite"
+            },
+            {
+              "id": "70",
+              "name": "gerbilHD",
+              "type": "sprite"
+            },
+            {
+              "id": "72",
+              "name": "Fondu",
+              "type": "sprite"
+            },
+            {
+              "id": "73",
+              "name": "BackgroundMenu",
+              "type": "sprite"
+            },
+            {
+              "id": "75",
+              "name": "MenuSelect",
               "type": "sprite"
             }
           ]
@@ -123,6 +225,16 @@
           "type": "sprite"
         },
         {
+          "id": "50",
+          "name": "Player2Score",
+          "type": "sprite"
+        },
+        {
+          "id": "51",
+          "name": "Player1Score",
+          "type": "sprite"
+        },
+        {
           "id": "39",
           "name": "Cache",
           "type": "sprite"
@@ -153,6 +265,31 @@
           "id": "26",
           "name": "BallHit",
           "type": "sound"
+        },
+        {
+          "id": "62",
+          "name": "IntroMusic",
+          "type": "sound"
+        },
+        {
+          "id": "63",
+          "name": "StartSound",
+          "type": "sound"
+        },
+        {
+          "id": "78",
+          "name": "Validate",
+          "type": "sound"
+        },
+        {
+          "id": "79",
+          "name": "SwitchSelect",
+          "type": "sound"
+        },
+        {
+          "id": "80",
+          "name": "SuperUltraBall",
+          "type": "sound"
         }
       ]
     },
@@ -162,8 +299,18 @@
       "type": "script"
     },
     {
+      "id": "61",
+      "name": "IntroBehavior",
+      "type": "script"
+    },
+    {
       "id": "11",
       "name": "PlayerBehavior",
+      "type": "script"
+    },
+    {
+      "id": "47",
+      "name": "BotBehavior",
       "type": "script"
     },
     {

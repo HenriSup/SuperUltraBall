@@ -10,8 +10,12 @@ class MatchBehavior extends Sup.Behavior {
   private timeShaking:number=60;
   private startShake:boolean=false;
   private serviceLeft=true;
+  private transition:Sup.SpriteRenderer;
+  
  
   awake() {
+    this.transition = Sup.getActor("Transition").spriteRenderer;
+    this.transition.setAnimation("TransitionFin",false);
     this.leftScoreActor = Sup.getActor("LeftScore");
     this.rightScoreActor = Sup.getActor("RightScore");
     var leftScoreChildActors = this.leftScoreActor.getChildren();
@@ -79,10 +83,8 @@ class MatchBehavior extends Sup.Behavior {
   }
   
   nextRound(player){
-    var scene = Sup.appendScene("prefab/PlayerScored")[0];
+    var scene = Sup.appendScene("prefab/Player"+player+"Scored")[0];
     scene.setPosition(0,0,18);
-    scene.getBehavior(PlayerScoredBehavior).value="Player "+player+" SCORED ! "
-    scene.getBehavior(PlayerScoredBehavior).activated=true;
   }
   
   restartRound(){

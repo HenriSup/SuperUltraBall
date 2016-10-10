@@ -6,13 +6,13 @@
   "filtering": "pixelated",
   "wrapping": "clampToEdge",
   "pixelsPerUnit": 1,
-  "framesPerSecond": 24,
+  "framesPerSecond": 7,
   "opacity": 1,
   "alphaTest": 0,
   "frameOrder": "rows",
   "grid": {
-    "width": 160,
-    "height": 144
+    "width": 23,
+    "height": 26
   },
   "origin": {
     "x": 0.5,
@@ -21,23 +21,30 @@
   "animations": [
     {
       "id": "0",
-      "name": "Transition",
+      "name": "Run",
       "startFrameIndex": 0,
-      "endFrameIndex": 48,
-      "speed": 1
+      "endFrameIndex": 7,
+      "speed": 2
     },
     {
       "id": "1",
-      "name": "TransitionDebut",
-      "startFrameIndex": 0,
-      "endFrameIndex": 26,
-      "speed": 1
+      "name": "Idle",
+      "startFrameIndex": 8,
+      "endFrameIndex": 15,
+      "speed": 2
     },
     {
       "id": "2",
-      "name": "TransitionFin",
-      "startFrameIndex": 13,
-      "endFrameIndex": 51,
+      "name": "JumpCharge",
+      "startFrameIndex": 17,
+      "endFrameIndex": 20,
+      "speed": 2
+    },
+    {
+      "id": "3",
+      "name": "InAirUp",
+      "startFrameIndex": 23,
+      "endFrameIndex": 23,
       "speed": 1
     }
   ],

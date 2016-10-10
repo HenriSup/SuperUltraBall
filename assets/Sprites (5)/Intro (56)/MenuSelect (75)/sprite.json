@@ -6,7 +6,7 @@
   "filtering": "pixelated",
   "wrapping": "clampToEdge",
   "pixelsPerUnit": 1,
-  "framesPerSecond": 24,
+  "framesPerSecond": 12,
   "opacity": 1,
   "alphaTest": 0,
   "frameOrder": "rows",
@@ -21,23 +21,30 @@
   "animations": [
     {
       "id": "0",
-      "name": "Transition",
+      "name": "SelectLeft",
       "startFrameIndex": 0,
-      "endFrameIndex": 48,
+      "endFrameIndex": 3,
       "speed": 1
     },
     {
       "id": "1",
-      "name": "TransitionDebut",
-      "startFrameIndex": 0,
-      "endFrameIndex": 26,
+      "name": "SelectRight",
+      "startFrameIndex": 8,
+      "endFrameIndex": 11,
       "speed": 1
     },
     {
       "id": "2",
-      "name": "TransitionFin",
-      "startFrameIndex": 13,
-      "endFrameIndex": 51,
+      "name": "ValidateLeft",
+      "startFrameIndex": 4,
+      "endFrameIndex": 7,
+      "speed": 1
+    },
+    {
+      "id": "3",
+      "name": "ValidateRight",
+      "startFrameIndex": 12,
+      "endFrameIndex": 15,
       "speed": 1
     }
   ],

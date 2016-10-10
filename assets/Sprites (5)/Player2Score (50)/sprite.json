@@ -21,23 +21,9 @@
   "animations": [
     {
       "id": "0",
-      "name": "Transition",
+      "name": "Score",
       "startFrameIndex": 0,
-      "endFrameIndex": 48,
-      "speed": 1
-    },
-    {
-      "id": "1",
-      "name": "TransitionDebut",
-      "startFrameIndex": 0,
-      "endFrameIndex": 26,
-      "speed": 1
-    },
-    {
-      "id": "2",
-      "name": "TransitionFin",
-      "startFrameIndex": 13,
-      "endFrameIndex": 51,
+      "endFrameIndex": 22,
       "speed": 1
     }
   ],
